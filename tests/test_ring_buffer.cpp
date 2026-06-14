@@ -20,11 +20,10 @@ TEST(SPSCRingBufferTest, ConcurrentPushPop) {
   });
 
   std::thread consumer([&]() {
-    size_t item;
+    size_t item{0};
     for (size_t i = 0; i < target_count; ++i) {
-      while (!queue.pop(item)) {
-        consumed_data.push_back(item);
-      }
+      while (!queue.pop(item)) { }
+      consumed_data.push_back(item);
     }
   });
 
