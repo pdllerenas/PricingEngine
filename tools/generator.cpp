@@ -36,6 +36,6 @@ void run_market_data_engine() {
       }
     }
   } catch (const std::exception& e) {
-    std::cerr << "Engine crashed: " << e.what << "\n";
+    std::cerr << "Engine crashed: " << e.what() << "\n";
   }
 }

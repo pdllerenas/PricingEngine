@@ -22,7 +22,7 @@ class Epoll {
   Epoll(const Epoll&) = delete;
   Epoll& operator=(const Epoll&) = delete;
 
-  Epoll(Epoll&& other) noexcept : epoll_fd(std::exchange(other.poll_fd, -1)) {}
+  Epoll(Epoll&& other) noexcept : epoll_fd(std::exchange(other.epoll_fd, -1)) {}
   Epoll& operator=(Epoll&& other) noexcept {
     if (this != &other) {
       if (epoll_fd >= 0) close(epoll_fd);

@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -18,6 +19,13 @@ class Socket {
     if (fd < 0) {
       throw std::system_error(errno, std::system_category(),
                               "Critical Failure: socket creation");
+    }
+
+    int flags = fcntl(fd, F_GETFL, 0);
+    if (flags == -1 || fcntl(fd, F_SETFL, flags | O_NONBLOCK) == -1) {
+      close(fd);
+      throw std::system_error(errno, std::system_category(),
+                              "Critical Failure: fcntl O_NONBLOCK");
     }
 
     struct sockaddr_in local{};
