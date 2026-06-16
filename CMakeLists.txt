@@ -49,7 +49,23 @@ FetchContent_MakeAvailable(googletest)
 # Enable CTest functionality
 enable_testing()
 
-# --- 5. Add Subdirectories ---
+# --- 5. Micro-Benchmarking Framework ---
+# --- Micro-Benchmarking Framework ---
+FetchContent_Declare(
+  googlebenchmark
+  URL https://github.com/google/benchmark/archive/v1.8.3.zip
+)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googlebenchmark)
+
+if(TARGET benchmark)
+    target_compile_options(benchmark PRIVATE "-Wno-error" "-Wno-conversion")
+endif()
+if(TARGET benchmark_main)
+    target_compile_options(benchmark_main PRIVATE "-Wno-error" "-Wno-conversion")
+endif()
+
+# --- 6. Add Subdirectories ---
 add_subdirectory(src)
 add_subdirectory(tests)
-add_subdirectory(tools)
+# add_subdirectory(tools)
